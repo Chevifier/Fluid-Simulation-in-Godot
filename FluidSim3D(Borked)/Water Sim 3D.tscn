@@ -1,0 +1,100 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://FPS.gd" type="Script" id=1]
+[ext_resource path="res://FluidSim3D(Borked)/Dev_Color_Material.tres" type="Material" id=2]
+[ext_resource path="res://FluidSim3D(Borked)/WaterGen3D.gd" type="Script" id=3]
+[ext_resource path="res://FluidSim3D(Borked)/CamMove.gd" type="Script" id=4]
+[ext_resource path="res://Water_Color.tscn" type="PackedScene" id=5]
+
+[node name="Water Sim 3D" type="Spatial"]
+
+[node name="Water Gen 3D" type="Position3D" parent="."]
+transform = Transform( -0.0146428, 0, 0.999893, 0, 1, 0, -0.999893, 0, -0.0146428, 23.2688, 66.9917, 2.99151 )
+script = ExtResource( 3 )
+particle_material = ExtResource( 2 )
+max_water_particles = 1200
+
+[node name="Water Gen 3D2" type="Position3D" parent="."]
+transform = Transform( -0.0146428, 0, 0.999893, 0, 1, 0, -0.999893, 0, -0.0146428, 23.1791, 66.9917, -3.13826 )
+script = ExtResource( 3 )
+particle_material = ExtResource( 2 )
+max_water_particles = 1200
+
+[node name="Water Gen 3D3" type="Position3D" parent="."]
+transform = Transform( -0.0146428, 0, 0.999893, 0, 1, 0, -0.999893, 0, -0.0146428, 23.0806, 66.9917, 0.0134945 )
+script = ExtResource( 3 )
+particle_material = ExtResource( 2 )
+max_water_particles = 1200
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+use_collision = true
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.89007, 0 )
+width = 68.8365
+height = 25.742
+depth = 53.8466
+
+[node name="CSGBox2" type="CSGBox" parent="CSGCombiner/CSGBox"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.9489, 0 )
+operation = 2
+width = 37.752
+height = 22.6905
+depth = 34.2446
+
+[node name="CSGBox3" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 0.923089, 0.343015, -0.173916, -0.384585, 0.823311, -0.417437, 0, 0.452217, 0.891908, -49.6652, 18.4013, -20.298 )
+width = 94.8448
+height = 21.8186
+depth = 41.457
+
+[node name="CSGBox5" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 0.923089, 0.353755, 0.150875, -0.384585, 0.84909, 0.362133, -2.98023e-08, -0.392305, 0.919835, -48.4172, 21.3967, 13.0934 )
+width = 78.5153
+height = 21.8186
+depth = 41.457
+
+[node name="CSGBox4" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 0.844328, -0.535827, 0, 0.535827, 0.844328, 0, 0, 0, 1, 11.7115, 52.5655, 0 )
+width = 55.8632
+height = 21.8186
+depth = 41.457
+
+[node name="CSGBox4" type="CSGBox" parent="CSGCombiner/CSGBox4"]
+transform = Transform( 0.98878, 0, 0.14938, -2.98023e-08, 1, 2.98023e-08, -0.14938, 0, 0.98878, 1.6003, 6.17474, -0.491947 )
+operation = 2
+width = 62.7263
+height = 10.7936
+depth = 12.1043
+
+[node name="CSGBox5" type="CSGBox" parent="CSGCombiner/CSGBox4"]
+transform = Transform( 0.956829, 0, -0.290652, 2.98023e-08, 1, 2.98023e-08, 0.290652, -3.84974e-09, 0.956829, -3.54844, 6.17474, 18.4491 )
+width = 62.7263
+height = 10.7936
+depth = 13.1606
+
+[node name="cam" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -56.4085, 52.2738, 37.6531 )
+script = ExtResource( 4 )
+
+[node name="Camera" type="Camera" parent="cam"]
+far = 500.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Water_Color" parent="CanvasLayer" instance=ExtResource( 5 )]
+
+[node name="FPS" type="Label" parent="CanvasLayer"]
+modulate = Color( 0, 0.682353, 1, 1 )
+margin_left = 32.0
+margin_top = 906.0
+margin_right = 126.0
+margin_bottom = 937.0
+text = "FPS: 0
+PHYSICS FPS: 0"
+script = ExtResource( 1 )
+adjust_physics_update = true
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.852692, 0.16664, -0.495124, 0.24557, 0.708668, 0.661426, 0.461098, -0.68558, 0.563354, 0, 0, 0 )
+shadow_enabled = true

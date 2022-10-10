@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Water_View_Shader.gdshader" type="Shader" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=3]
+octaves = 9
+period = 58.5
+persistence = 0.919
+lacunarity = 2.8
+
+[sub_resource type="NoiseTexture" id=4]
+seamless = true
+noise = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 1 )
+shader_param/water_speed = 0.01
+shader_param/color_detect_threshold = 0.35
+shader_param/water_dev_color = Color( 1, 0, 1, 1 )
+shader_param/water_color = Color( 0, 0.529412, 1, 1 )
+shader_param/bubble_color = Color( 0, 0, 1.5, 1 )
+shader_param/noise = SubResource( 4 )
+
+[node name="Water_Color" type="ColorRect"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -703.0
+margin_top = -1001.0
+margin_right = 948.0
+margin_bottom = 719.0
+rect_min_size = Vector2( 500, 500 )
+size_flags_horizontal = 3
+size_flags_vertical = 3

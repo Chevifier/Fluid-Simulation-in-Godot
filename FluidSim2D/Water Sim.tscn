@@ -1,0 +1,90 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://FPS.gd" type="Script" id=1]
+[ext_resource path="res://FluidSim2D/WaterGenPhysicsServer.gd" type="Script" id=2]
+[ext_resource path="res://FluidSim2D/Container.gd" type="Script" id=3]
+[ext_resource path="res://Water_View_Shader.gdshader" type="Shader" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://FluidSim2D/water_particle.png" type="Texture" id=6]
+[ext_resource path="res://FluidSim2D/MouseJig.tscn" type="PackedScene" id=7]
+
+[sub_resource type="OpenSimplexNoise" id=3]
+octaves = 9
+period = 58.5
+persistence = 0.919
+lacunarity = 2.8
+
+[sub_resource type="NoiseTexture" id=4]
+seamless = true
+noise = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 4 )
+shader_param/water_speed = 0.01
+shader_param/color_detect_threshold = 0.35
+shader_param/water_dev_color = Color( 1, 0, 1, 1 )
+shader_param/water_color = Color( 0, 0.462745, 1, 1 )
+shader_param/bubble_color = Color( 1, 1, 1, 1 )
+shader_param/noise = SubResource( 4 )
+
+[node name="Water Sim" type="Node2D"]
+
+[node name="Container" type="StaticBody2D" parent="."]
+position = Vector2( 164, 191 )
+script = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Container"]
+polygon = PoolVector2Array( -166, -494, -90, -537, -81, -670, 14, -708, 75, -532, 98, -391, 314, -337, 472, -233, 273.477, -190.425, 172, -189, 137, 117, 391, 239, 395, 321, 107, 301, 111, 509, 273, 533, 341, 506, 432, 485, 483, 527, 528, 532, 631, 377, 614, 169, 409, 10, 573, -98, 658, -230, 573, -437, 762.306, -479.723, 794, -861, 1066, -880, 1087, -553, 1087, -259, 1125, 868, -160, 901 )
+
+[node name="WaterGen" type="Position2D" parent="."]
+position = Vector2( 587, -688 )
+script = ExtResource( 2 )
+__meta__ = {
+"_gizmo_extents_": 60.0
+}
+particle_texture = ExtResource( 6 )
+max_water_particles = 800
+
+[node name="WaterGen3" type="Position2D" parent="."]
+position = Vector2( 705, -686 )
+script = ExtResource( 2 )
+__meta__ = {
+"_gizmo_extents_": 60.0
+}
+particle_texture = ExtResource( 6 )
+max_water_particles = 800
+
+[node name="WaterGen2" type="Position2D" parent="."]
+position = Vector2( 467, -685 )
+script = ExtResource( 2 )
+__meta__ = {
+"_gizmo_extents_": 60.0
+}
+particle_texture = ExtResource( 6 )
+max_water_particles = 800
+
+[node name="Camera2D" type="Camera2D" parent="."]
+light_mask = 2
+position = Vector2( 535, 234 )
+current = true
+zoom = Vector2( 2, 2 )
+
+[node name="WaterColor" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( 536, 181 )
+scale = Vector2( 45.6875, 39.875 )
+texture = ExtResource( 5 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FPS" type="Label" parent="CanvasLayer"]
+margin_left = 43.0
+margin_top = 20.0
+margin_right = 137.0
+margin_bottom = 51.0
+text = "FPS: 0
+PHYSICS FPS: 0"
+script = ExtResource( 1 )
+adjust_physics_update = true
+
+[node name="MouseJig" parent="." instance=ExtResource( 7 )]
